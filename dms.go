@@ -1,9 +1,5 @@
 package dms 
 
-import (
-        "fmt"
-)
-
 type LatLonError struct {
     err string
 }
