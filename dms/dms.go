@@ -11,10 +11,10 @@ func (e *LatLonError) Error() string {
 type DMS struct {
     degrees uint8
     minutes uint8
-    seconds uint8
+    seconds float64 
 }
 
-func newDMS(lat, lon float64) (*DMS, *DMS, error) {
+func NewDMS(lat, lon float64) (*DMS, *DMS, error) {
     if lat < 0 || lon < 0 {
         return nil, nil, &LatLonError{"Latitude or longitude must be positive."} 
     }
@@ -24,23 +24,13 @@ func newDMS(lat, lon float64) (*DMS, *DMS, error) {
 
     latitude := uint8(lat)
     latitudeMinutes := uint8((lat - float64(latitude)) * 60)
-    latitudeSeconds := uint8((lat - float64(latitude) - float64(latitudeMinutes) / 60) * 3600)
+    latitudeSeconds := (lat - float64(latitude) - float64(latitudeMinutes) / 60) * 3600
 
     longitude := uint8(lon)
     longitudeMinutes := uint8((lon - float64(longitude)) * 60)
-    longitudeSeconds := uint8((lon - float64(longitude) - float64(longitudeMinutes) / 60) * 3600)
+    longitudeSeconds := (lon - float64(longitude) - float64(longitudeMinutes) / 60) * 3600
 
-    latDms := &DMS{
-        degrees: latitude,
-        minutes: latitudeMinutes,
-        seconds: latitudeSeconds,
-    }
-
-    lonDms := &DMS{
-        degrees: longitude,
-        minutes: longitudeMinutes,
-        seconds: longitudeSeconds,
-    }
-
-    return latDms, lonDms, nil
+    return &DMS{degrees: latitude, minutes: latitudeMinutes, seconds: latitudeSeconds,}, 
+           &DMS{degrees: longitude, minutes: longitudeMinutes, seconds: longitudeSeconds,}, 
+           nil
 }
