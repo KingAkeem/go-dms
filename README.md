@@ -3,7 +3,7 @@ A small library for converting Decimal Degrees to Degrees, Minutes, Seconds coor
 
 This library provides efficient translation compared to others and will improved upon. I've currently tested against a JavaScript library.
 
-test.go:
+**test.go:**
 ```
 package main
 
@@ -25,7 +25,8 @@ func main() {
     fmt.Printf("Function took %f seconds.\n", end.Sub(start).Seconds())
 }
 ```
-**go run test.go**
+**>> go run test.go**
+
 **Output:**
 ```
     DMS coordinates:
@@ -34,6 +35,7 @@ func main() {
 ```
 
 **>> GOOS=js GOARCH=wasm go run -exec="$(go env GOROOT)/misc/wasm/go_js_wasm_exec" .** (Compiling as WebAssembly module for Node, run command in the same directory as `test.go`)
+
 **Output:**
 ```
     DMS coordinates:
@@ -44,7 +46,7 @@ func main() {
 
 ### [dms-js](https://github.com/WSDOT-GIS/dms-js)
 
-index.js:
+**index.js:**
 ```
 var dms = require('dms-conversion');
 var NanoTimer = require('nanotimer');
@@ -60,7 +62,8 @@ var seconds = timerObj.time(dmsTest, "", 's')
 console.log('Function took ' + seconds + ' seconds.');
 ```
 
-**node index.js**
+**>> node index.js**
+
 **Output:** 
 ```
     DMS Coordinates: 2°13′8.147999999999422″ N, 1°12′50.058″ E
