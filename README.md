@@ -3,6 +3,36 @@ A small library for converting Decimal Degrees to Degrees, Minutes, Seconds coor
 
 This library provides efficient translation compared to others and will improved upon. I've currently tested against a JavaScript library by building `go-dms` as a WebAssembly module.
 
+```
+package main
+
+import (
+    "./dms"
+    "fmt"
+    "time"
+    "log"
+)
+
+func main() {
+    start := time.Now()
+    lat, lon, err := dms.NewDMS(2.21893, 1.213905)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Printf("DMS coordinates:\n%+v, %+v\n", lat.String(), lon.String()) 
+    end := time.Now()
+    fmt.Printf("Function took %f seconds.\n", end.Sub(start).Seconds())
+}
+```
+
+**Output:**
+```
+    DMS coordinates:
+    2°13'8.148000" N, 1°12'50.058000" E
+    Function took 0.000478 seconds.
+```
+
+
 ### [dms-js](https://github.com/WSDOT-GIS/dms-js)
 ```
 var dms = require('dms-conversion');
@@ -19,10 +49,13 @@ var seconds = timerObj.time(dmsTest, "", 's')
 console.log('Function took ' + seconds + ' seconds.');
 ```
 
+**Output:** 
+
 ```
-Output:  
-DMS Coordinates: 2°13′8.147999999999422″ N, 1°12′50.058″ E
-Function took 0.001828968 seconds.
+    DMS Coordinates: 2°13′8.147999999999422″ N, 1°12′50.058″ E
+    Function took 0.001828968 seconds.
 ```
+
+
 
 
