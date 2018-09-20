@@ -20,7 +20,7 @@ type DMS struct {
 }
 
 func (d *DMS) String() string {
-    return fmt.Sprintf(`%d° %d' %f" %s`, d.degrees, d.minutes, d.seconds, d.direction)
+    return fmt.Sprintf(`%d°%d'%f" %s`, d.degrees, d.minutes, d.seconds, d.direction)
 }
 
 func NewDMS(lat, lon float64) (*DMS, *DMS, error) {
