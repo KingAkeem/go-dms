@@ -40,6 +40,8 @@ func main() {
 
 **>> GOOS=js GOARCH=wasm go run -exec="$(go env GOROOT)/misc/wasm/go_js_wasm_exec" .** (Compiling as WebAssembly module for Node, run command in the same directory as `test.go`)
 
+Golang WebAssemlby Wiki: https://github.com/golang/go/wiki/WebAssembly
+
 **Output:**
 ```
     DMS coordinates:
