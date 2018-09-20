@@ -75,5 +75,33 @@ console.log('Function took ' + seconds + ' seconds.');
 ```
 
 
+### [formatcoords](https://github.com/nerik/formatcoords)
+
+**index.js:**
+```
+var formatcoords = require('formatcoords');
+var NanoTimer = require('nanotimer');
+var timerObj = new NanoTimer();
+
+var dmsTest = function() {
+    var coords = formatcoords(2.21893, 1.213905);
+    console.log('DMS Coordinates: ' + coords.format());
+    return coords;
+};
+
+var seconds = timerObj.time(dmsTest, "", 's')
+console.log('Function took ' + seconds + ' seconds.');
+```
+
+**>> node index.js**
+
+**Output:** 
+```
+DMS Coordinates: 2° 13′ 8.14800″ N 1° 12′ 50.05800″ E
+Function took 0.002745904 seconds.
+```
+
+
+
 
 
