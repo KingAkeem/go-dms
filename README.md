@@ -1,7 +1,7 @@
 # go-dms
 A small library for converting Decimal Degrees to Degrees, Minutes, Seconds coordinates
 
-Efficiently converting degrees between DD and DMS
+Efficiently converting coordinates between DD and DMS
 
 ## Installation
 
