@@ -1,14 +1,18 @@
 # go-dms
 A small library for converting Decimal Degrees to Degrees, Minutes, Seconds coordinates
 
-This library provides efficient translation compared to others and will improved upon. I've currently tested against a JavaScript library.
+Efficiently converting degrees between DD and DMS
+
+## Installation
+
+`go get -u github.com/KingAkeem/go-dms/dms`
 
 **test.go:**
 ```
 package main
 
 import (
-    "./dms"
+    "github.com/KingAkeem/go-dms/dms"
     "fmt"
     "time"
     "log"
