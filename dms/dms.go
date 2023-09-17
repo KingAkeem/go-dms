@@ -13,29 +13,47 @@ func (e *LatLonError) Error() string {
 	return e.err
 }
 
-// DMS coordinates
-type DMS struct {
-	degrees   uint8
-	minutes   uint8
+// Position is a single coordinate within a DMS location
+type Position struct {
+	degrees   int
+	minutes   int
 	seconds   float64
 	direction string
 }
 
-func (d *DMS) String() string {
-	return fmt.Sprintf(`%d°%d'%f" %s`, d.degrees, d.minutes, d.seconds, d.direction)
+// DMS coordinate
+type DMS struct {
+	Latitude  Position
+	Longitude Position
 }
 
-// NewDMS converts Decimal Degreees to Degree, Minute, Seconds coordinates
-func NewDMS(lat, lon float64) (*DMS, *DMS, error) {
+func (p Position) String() string {
+	return fmt.Sprintf(`%d°%d'%v" %s`, p.degrees, p.minutes, p.seconds, p.direction)
+}
+
+func newPosition(decimalDegrees float64, direction string) Position {
+	degrees := uint8(decimalDegrees)
+	minutes := uint8((decimalDegrees - float64(degrees)) * 60)
+	seconds := (decimalDegrees - float64(degrees) - float64(minutes)/60) * 3600
+
+	return Position{
+		degrees:   int(degrees),
+		minutes:   int(minutes),
+		seconds:   seconds,
+		direction: direction,
+	}
+}
+
+// New converts Decimal Degreees to Degree, Minute, Seconds coordinates
+func New(lat, lon float64) (*DMS, error) {
 	if lat < 0 || lon < 0 {
-		return nil, nil, &LatLonError{"Latitude or longitude must be positive."}
+		return nil, &LatLonError{"latitude or longitude must be positive"}
 	}
 	if lat > 90 || lon > 180 {
-		return nil, nil, &LatLonError{"Latitude must be less than 90 and longitude must be less than 180."}
+		return nil, &LatLonError{"latitude must be less than 90 and longitude must be less than 180"}
 	}
 
-	var latDirection string
-	var lonDirection string
+	var latDirection, lonDirection string
 	if lat > 0 {
 		latDirection = "N"
 	} else {
@@ -48,15 +66,8 @@ func NewDMS(lat, lon float64) (*DMS, *DMS, error) {
 		lonDirection = "W"
 	}
 
-	latitude := uint8(lat)
-	latitudeMinutes := uint8((lat - float64(latitude)) * 60)
-	latitudeSeconds := (lat - float64(latitude) - float64(latitudeMinutes)/60) * 3600
+	dmsLat := newPosition(lat, latDirection)
+	dmsLon := newPosition(lon, lonDirection)
 
-	longitude := uint8(lon)
-	longitudeMinutes := uint8((lon - float64(longitude)) * 60)
-	longitudeSeconds := (lon - float64(longitude) - float64(longitudeMinutes)/60) * 3600
-
-	return &DMS{degrees: latitude, minutes: latitudeMinutes, seconds: latitudeSeconds, direction: latDirection},
-		&DMS{degrees: longitude, minutes: longitudeMinutes, seconds: longitudeSeconds, direction: lonDirection},
-		nil
+	return &DMS{Latitude: dmsLat, Longitude: dmsLon}, nil
 }
