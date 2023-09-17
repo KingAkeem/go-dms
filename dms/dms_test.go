@@ -7,9 +7,7 @@ import (
 )
 
 func TestDMS(t *testing.T) {
-	lat := 23.33
-	lon := 42.55
-	dms, err := New(lat, lon)
+	dms, err := New(LatLon{Latitude: 23.33, Longitude: 42.55})
 	assert.Nil(t, err)
 
 	// test latitude

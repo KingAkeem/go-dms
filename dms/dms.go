@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+type LatLon struct {
+	Latitude  float64
+	Longitude float64
+}
+
 // LatLonError is used for errors with lat/lon values
 type LatLonError struct {
 	err string
@@ -48,8 +53,10 @@ func newPosition(decimalDegrees float64, direction string) Position {
 	}
 }
 
-// New converts Decimal Degreees to Degree, Minute, Seconds coordinates
-func New(lat, lon float64) (*DMS, error) {
+// New generates a DMS position from a set of decimal degree coordinates (latitude/longitude)
+func New(latlon LatLon) (*DMS, error) {
+	lat, lon := latlon.Latitude, latlon.Longitude
+
 	if lat < 0 || lon < 0 {
 		return nil, &LatLonError{"latitude or longitude must be positive"}
 	}
