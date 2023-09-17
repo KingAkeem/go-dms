@@ -8,7 +8,7 @@ Efficiently converting coordinates between DD and DMS
 `go get -u github.com/KingAkeem/go-dms/dms`
 
 **test.go:**
-```
+```go
 package main
 
 import (
@@ -20,7 +20,7 @@ import (
 
 func main() {
     start := time.Now()
-    dmsCoordinate, err := dms.New(2.21893, 1.213905)
+    dmsCoordinate, err := dms.New(dms.LatLon{Latitude: 2.21893, Longitude: 1.213905})
     if err != nil {
         log.Fatal(err)
     }
@@ -53,7 +53,7 @@ Golang WebAssemlby Wiki: https://github.com/golang/go/wiki/WebAssembly
 ### [dms-js](https://github.com/WSDOT-GIS/dms-js)
 
 **index.js:**
-```
+```javascript
 var dms = require('dms-conversion');
 var NanoTimer = require('nanotimer');
 var timerObj = new NanoTimer();
@@ -80,7 +80,7 @@ console.log('Function took ' + seconds + ' seconds.');
 ### [formatcoords](https://github.com/nerik/formatcoords)
 
 **index.js:**
-```
+```javascript
 var formatcoords = require('formatcoords');
 var NanoTimer = require('nanotimer');
 var timerObj = new NanoTimer();
