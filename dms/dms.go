@@ -21,14 +21,18 @@ type Position struct {
 	direction string
 }
 
+func (p Position) String() string {
+	return fmt.Sprintf(`%d°%d'%v" %s`, p.degrees, p.minutes, p.seconds, p.direction)
+}
+
 // DMS coordinate
 type DMS struct {
 	Latitude  Position
 	Longitude Position
 }
 
-func (p Position) String() string {
-	return fmt.Sprintf(`%d°%d'%v" %s`, p.degrees, p.minutes, p.seconds, p.direction)
+func (d DMS) String() string {
+	return fmt.Sprintf(`%s %s`, d.Latitude, d.Longitude)
 }
 
 func newPosition(decimalDegrees float64, direction string) Position {
