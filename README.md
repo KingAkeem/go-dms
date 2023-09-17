@@ -24,7 +24,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Printf("DMS coordinates:\n%+v, %+v\n", dmsCoordinate.String()) 
+    fmt.Printf("DMS coordinates: %+v\n", dmsCoordinate.String()) 
     end := time.Now()
     fmt.Printf("Function took %f seconds.\n", end.Sub(start).Seconds())
 }
