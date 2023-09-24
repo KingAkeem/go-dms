@@ -69,7 +69,7 @@ func NewDMS(latlon DecimalDegrees) (*DMS, error) {
 	}
 
 	if lon < -180 || lon > 180 {
-		return nil, fmt.Errorf("longitude must be in range of -180 and 180, foujnd %f", lon)
+		return nil, fmt.Errorf("longitude must be in range of -180 and 180, found %f", lon)
 	}
 
 	latitude := newDMSAngle(lat, latDirection)
