@@ -3,11 +3,12 @@ package dms
 import (
 	"testing"
 
+	"github.com/KingAkeem/go-dms/latlon"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestDMS(t *testing.T) {
-	dms, err := NewDMS(DecimalDegrees{Latitude: 23.33, Longitude: 42.55})
+	dms, err := New(latlon.LatLon{Latitude: 23.33, Longitude: 42.55})
 	assert.Nil(t, err)
 
 	// test latitude
@@ -24,9 +25,10 @@ func TestDMS(t *testing.T) {
 	assert.Equal(t, dms.Longitude.direction, "E")
 	assert.Equal(t, dms.Longitude.String(), `42°32'59.9999999999898" E`)
 
+	// test full
 	assert.Equal(t, dms.String(), `23°19'47.99999999999392" N 42°32'59.9999999999898" E`)
 
-	dms, err = NewDMS(DecimalDegrees{Latitude: -66.434323, Longitude: -115.25})
+	dms, err = New(latlon.LatLon{Latitude: -66.434323, Longitude: -115.25})
 	assert.Nil(t, err)
 
 	// test latitude
@@ -43,5 +45,18 @@ func TestDMS(t *testing.T) {
 	assert.Equal(t, dms.Longitude.direction, "W")
 	assert.Equal(t, dms.Longitude.String(), `115°15'0" W`)
 
+	expectedLatLon := dms.GetDecimalDegrees()
+	assert.Equal(t, expectedLatLon.Latitude, -66.434323)
+	assert.Equal(t, expectedLatLon.Longitude, -115.25)
+
+	// test full
 	assert.Equal(t, dms.String(), `66°26'3.5628000000223814" S 115°15'0" W`)
+
+	dms, err = New(latlon.LatLon{Latitude: -91, Longitude: 85})
+	assert.NotNil(t, err)
+	assert.Nil(t, dms)
+
+	dms, err = New(latlon.LatLon{Latitude: 23, Longitude: 185})
+	assert.NotNil(t, err)
+	assert.Nil(t, dms)
 }
