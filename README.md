@@ -20,7 +20,7 @@ import (
 
 func main() {
     start := time.Now()
-    dmsCoordinate, err := dms.New(dms.DecimalDegrees{Latitude: 2.21893, Longitude: 1.213905})
+    dmsCoordinate, err := dms.NewDMS(dms.LatLon{Latitude: 2.21893, Longitude: 1.213905})
     if err != nil {
         log.Fatal(err)
     }
