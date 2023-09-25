@@ -13,6 +13,7 @@ package main
 
 import (
     "github.com/KingAkeem/go-dms/dms"
+    "github.com/KingAkeem/go-dms/latlon"
     "fmt"
     "time"
     "log"
@@ -20,7 +21,7 @@ import (
 
 func main() {
     start := time.Now()
-    dmsCoordinate, err := dms.NewDMS(dms.LatLon{Latitude: 2.21893, Longitude: 1.213905})
+    dmsCoordinate, err := dms.New(latlon.LatLon{Latitude: 2.21893, Longitude: 1.213905})
     if err != nil {
         log.Fatal(err)
     }
