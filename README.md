@@ -5,14 +5,14 @@ Efficiently converting coordinates between DD and DMS
 
 ## Installation
 
-`go get -u github.com/KingAkeem/go-dms/dms`
+`go get -u github.com/KingAkeem/go-dms`
 
 **test.go:**
 ```go
 package main
 
 import (
-    "github.com/KingAkeem/go-dms/dms"
+    "github.com/KingAkeem/go-dms" dms
     "fmt"
     "time"
     "log"
