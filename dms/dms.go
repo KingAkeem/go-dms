@@ -5,13 +5,13 @@ import (
 	"math"
 )
 
-// DecimalDegrees represent latitude/longitude of geographic coordinates as decimal frations of a degree.
+// DecimalDegrees represent latitude/longitude of geographic coordinates as decimal fractions of a degree.
 type DecimalDegrees struct {
 	Latitude  float64
 	Longitude float64
 }
 
-// DMSAngle represents a single angle for degrees, miutes, seconds measurements
+// DMSAngle represents a single angle for degrees, minutes, seconds measurements
 type DMSAngle struct {
 	degrees   int
 	minutes   int
@@ -20,7 +20,7 @@ type DMSAngle struct {
 }
 
 func (d DMSAngle) String() string {
-	return fmt.Sprintf(`%d°%d'%v" %s`, d.degrees, d.minutes, d.seconds, d.direction)
+	return fmt.Sprintf("%d°%d'%.6f\" %s", d.degrees, d.minutes, d.seconds, d.direction)
 }
 
 // DMS coordinate
@@ -34,14 +34,25 @@ func (d DMS) String() string {
 }
 
 func newDMSAngle(decimalDegreeAngle float64, direction string) DMSAngle {
-	decimalDegreeAngle = math.Abs(decimalDegreeAngle)
-	degrees := uint8(decimalDegreeAngle)
-	minutes := uint8((decimalDegreeAngle - float64(degrees)) * 60)
-	seconds := (decimalDegreeAngle - float64(degrees) - float64(minutes)/60) * 3600
+	totalSeconds := math.Abs(decimalDegreeAngle) * 3600
+	degrees := int(totalSeconds / 3600)
+	remainingSeconds := totalSeconds - float64(degrees)*3600
+	minutes := int(remainingSeconds / 60)
+	seconds := remainingSeconds - float64(minutes)*60
+
+	if seconds >= 59.9999999999 {
+		seconds = 0
+		minutes++
+	}
+
+	if minutes >= 60 {
+		minutes = 0
+		degrees++
+	}
 
 	return DMSAngle{
-		degrees:   int(degrees),
-		minutes:   int(minutes),
+		degrees:   degrees,
+		minutes:   minutes,
 		seconds:   seconds,
 		direction: direction,
 	}
@@ -52,13 +63,13 @@ func NewDMS(latlon DecimalDegrees) (*DMS, error) {
 	lat, lon := latlon.Latitude, latlon.Longitude
 
 	var latDirection, lonDirection string
-	if lat > 0 {
+	if lat >= 0 {
 		latDirection = "N"
 	} else {
 		latDirection = "S"
 	}
 
-	if lon > 0 {
+	if lon >= 0 {
 		lonDirection = "E"
 	} else {
 		lonDirection = "W"

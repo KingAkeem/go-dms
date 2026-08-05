@@ -20,11 +20,11 @@ import (
 
 func main() {
     start := time.Now()
-    dmsCoordinate, err := dms.NewDMS(dms.LatLon{Latitude: 2.21893, Longitude: 1.213905})
+    dmsCoordinate, err := dms.NewDMS(dms.DecimalDegrees{Latitude: 2.21893, Longitude: 1.213905})
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Printf("DMS coordinates: %+v\n", dmsCoordinate.String()) 
+    fmt.Printf("DMS coordinates: %s\n", dmsCoordinate.String())
     end := time.Now()
     fmt.Printf("Function took %f seconds.\n", end.Sub(start).Seconds())
 }
@@ -34,7 +34,7 @@ func main() {
 **Output:**
 ```
     DMS coordinates:
-    2°13'8.148000" N, 1°12'50.058000" E
+    2°13'8.148000" N 1°12'50.058000" E
     Function took 0.000049 seconds.
 ```
 
