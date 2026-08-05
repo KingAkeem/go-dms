@@ -23,23 +23,14 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Cache Go modules
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/.cache/golangci-lint
-            ${{ github.workspace }}/go.sum
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-
-            ${{ runner.os }}-go-
+      - name: Download module dependencies
+        run: go mod download
 
       - name: Verify module dependencies
-        run: go mod tidy && go mod verify
+        run: go mod verify
 
-      - name: Run gofmt check
-        run: gofmt -w ./dms/*.go
+      - name: Run gofmt
+        run: gofmt -w .
 
       - name: Run go vet
         run: go vet ./...

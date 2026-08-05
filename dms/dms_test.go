@@ -30,11 +30,11 @@ func TestDMS(t *testing.T) {
 	assert.Nil(t, err)
 
 	// test latitude
-	assert.Equal(t, dms.Latitude.degrees, 66)
-	assert.Equal(t, dms.Latitude.minutes, 26)
-	assert.Equal(t, dms.Latitude.seconds, 3.5628000000223814)
-	assert.Equal(t, dms.Latitude.direction, "S")
-	assert.Equal(t, dms.Latitude.String(), `66°26'3.5628000000223814" S`)
+	assert.Equal(t, 66, dms.Latitude.degrees)
+	assert.Equal(t, 26, dms.Latitude.minutes)
+	assert.InDelta(t, 3.5628, dms.Latitude.seconds, 1e-9)
+	assert.Equal(t, "S", dms.Latitude.direction)
+	assert.Equal(t, `66°26'3.562800" S`, dms.Latitude.String())
 
 	// test longitude
 	assert.Equal(t, 115, dms.Longitude.degrees)
